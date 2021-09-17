@@ -1,0 +1,11 @@
+controlador\ControladorPuerta.class
+controlador\ControladorLuz.class
+modelo\Puerta.class
+modelo\Persona.class
+controlador\ControladorPersona.class
+run\Main.class
+vista\VistaPrincipal.class
+controlador\ControladorPiso.class
+vista\Inicio.class
+modelo\Luz.class
+modelo\Piso.class
