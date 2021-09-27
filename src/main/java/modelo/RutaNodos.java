@@ -1,6 +1,6 @@
 package modelo;
 
-public class RutaNodos<T extends NodoHabitacion> implements Comparable<RutaNodos> {
+public class RutaNodos<T extends NodoGrafo> implements Comparable<RutaNodos> {
 
     private T nodoActual;
     private T nodoAnterior;

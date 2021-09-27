@@ -7,13 +7,22 @@ import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class BuscadorRuta<T extends NodoHabitacion> {
+public class BuscadorRuta<T extends NodoGrafo> {
 
-    private PlanoPiso<T> planoPiso;
+    private Grafo<T> planoPiso;
     private GeneradorDistancia<T> generadorDistanciaSiguienteNodo;
     private GeneradorDistancia<T> generadorDistanciaNodoObjetivo;
 
-    public ArrayList<T> buscadorRuta(T nodoOrigen, T nodoDestino) {
+    public BuscadorRuta(Grafo<T> planoPiso, GeneradorDistancia<T> generadorDistanciaSiguienteNodo, GeneradorDistancia<T> generadorDistanciaNodoObjetivo) {
+        this.planoPiso = planoPiso;
+        this.generadorDistanciaSiguienteNodo = generadorDistanciaSiguienteNodo;
+        this.generadorDistanciaNodoObjetivo = generadorDistanciaNodoObjetivo;
+    }
+    
+    
+    
+    //Algoritmo A* 
+    public ArrayList<T> buscarRuta(T nodoOrigen, T nodoDestino) {
         Queue<RutaNodos> colaPrioridad = new PriorityQueue<>();
         Map<T, RutaNodos<T>> mapaNodos = new HashMap<>();
 
