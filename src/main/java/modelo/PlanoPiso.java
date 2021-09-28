@@ -15,6 +15,10 @@ public class PlanoPiso {
     private Grafo<NodoHabitacion> plano;
     private BuscadorRuta<NodoHabitacion> buscadorRuta;
     
+    public PlanoPiso(){
+        
+    }
+    
     public void creacionPiso1() throws Exception {
         Set<NodoHabitacion> nodosHabitaciones = new HashSet<>();
         Map<String, Set<String>> conecciones = new HashMap<>();
@@ -68,10 +72,12 @@ public class PlanoPiso {
         List<NodoHabitacion> route = buscadorRuta.buscarRuta(plano.getNodoHabitacion("1"), plano.getNodoHabitacion("3"));
         System.out.println(route.stream().map(NodoHabitacion::getName).collect(Collectors.toList()));
     }
-    public List<NodoHabitacion> encontrarRuta2() {
-        List<NodoHabitacion> route = buscadorRuta.buscarRuta(plano.getNodoHabitacion("1"), plano.getNodoHabitacion("3"));
+    public List<NodoHabitacion> encontrarRuta2(String origen, String destino) {
+        
+        List<NodoHabitacion> route = buscadorRuta.buscarRuta(plano.getNodoHabitacion(origen), plano.getNodoHabitacion(destino));
        // System.out.println(route.stream().map(NodoHabitacion::getName).collect(Collectors.toList()));
        return route;
     }
+    
 }
 

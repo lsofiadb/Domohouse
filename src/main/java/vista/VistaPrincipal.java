@@ -13,12 +13,14 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.NodoHabitacion;
+import modelo.Persona;
 
-public class VistaPrincipal extends JFrame implements ActionListener, Runnable {
+public class VistaPrincipal extends JFrame implements ActionListener {
 
     //atributos
     private ArrayList personas, pisos;
@@ -26,16 +28,20 @@ public class VistaPrincipal extends JFrame implements ActionListener, Runnable {
     JButton btn1, btn2, btn3, btnBajar;
     JLabel lblp1, lblp2, lblp3, lblPersona1, lblPersona2, lblPersona3;
     ImageIcon imgp1, imgp2, imgp3, imgper1, imgper2, imgper3;
+    Thread hiloPersona1, hiloPersona2, hiloPersona3;
+    Persona persona1, persona2, persona3;
+    int cantidadPersonas = 0;
 
-    public VistaPrincipal() throws Exception {
+    public VistaPrincipal(int cantidad) throws Exception {
+        this.cantidadPersonas = cantidad;
         this.setTitle("Domohouse");
         this.setBounds(0, 0, 1100, 800);
         this.setLocationRelativeTo(null);
         this.setLayout(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         crearComponentes();
+        crearPersonas();
         this.setVisible(true);
-
     }
 
     public void setPersonas(ArrayList personas) {
@@ -61,17 +67,29 @@ public class VistaPrincipal extends JFrame implements ActionListener, Runnable {
         panel1.setBackground(new Color(183, 193, 190));
         panel1.setLayout(null);
 
-        //labels personas
+        //labels persona 1 bathroom
         imgper1 = new ImageIcon("src/main/java/imagenes/persona1.png");
         lblPersona1 = new JLabel(imgper1);
-        lblPersona1.setBounds(485, 190, 40, 40);
-        panel1.add(lblPersona1);
+        lblPersona1.setBounds(700, 100, 40, 40);
+      //  panel1.add(lblPersona1);
+
+        //labels persona 2 bedroom
+        imgper2 = new ImageIcon("src/main/java/imagenes/persona2.png");
+        lblPersona2 = new JLabel(imgper2);
+        lblPersona2.setBounds(740, 450, 40, 40);
+      //  panel1.add(lblPersona2);
+
+        //labels persona 3 kitchen 
+        imgper3 = new ImageIcon("src/main/java/imagenes/persona3.png");
+        lblPersona3 = new JLabel(imgper3);
+        lblPersona3.setBounds(450, 110, 40, 40);
+       // panel1.add(lblPersona3);
 
         //Image con el piso
         imgp1 = new ImageIcon("src/main/java/imagenes/PISO1.PNG");
         lblp1 = new JLabel(imgp1);
         lblp1.setBounds(170, 10, 730, 561);
-        panel1.add(lblp1);
+      //  panel1.add(lblp1);
 
         //Boton subir a piso 2
         btn1 = new JButton("Subir al piso 2");
@@ -93,6 +111,7 @@ public class VistaPrincipal extends JFrame implements ActionListener, Runnable {
         this.add(panel1);
         panel1.setVisible(true);
         //actualizarPosicionPersona(lblPersona1);
+        ControladorPersona c = new ControladorPersona();
 
         //this.getContentPane().setComponentZOrder(lblPersona1, 0);
     }
@@ -101,7 +120,7 @@ public class VistaPrincipal extends JFrame implements ActionListener, Runnable {
     public void actualizarPosicionPersona(JLabel label) throws Exception {
         ControladorPersona c = new ControladorPersona();
         List<NodoHabitacion> ruta = new ArrayList();
-        ruta = c.consultarRuta();
+        //   ruta = c.consultarRuta();
 
         //posicion nuevas 
         for (int i = 0; i < ruta.size(); i++) {
@@ -191,9 +210,9 @@ public class VistaPrincipal extends JFrame implements ActionListener, Runnable {
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == btn1) {
-//            panel1.setVisible(false);
-//            panel2.setVisible(true);
-            run();
+            panel1.setVisible(false);
+            panel2.setVisible(true);
+
         } else if (e.getSource() == btn2) {
             panel2.setVisible(false);
             panel3.setVisible(true);
@@ -206,29 +225,55 @@ public class VistaPrincipal extends JFrame implements ActionListener, Runnable {
         }
     }
 
-    @Override
-    public void run() {
-        Thread mihilo = new Thread();
+    //creacion de personas
+    public void crearPersonas() throws Exception {
         ControladorPersona c = new ControladorPersona();
-        List<NodoHabitacion> ruta = new ArrayList();
-        try {
-            ruta = c.consultarRuta();
-        
-         mihilo.start();
-        //posicion nuevas 
-        for (int i = 0; i < ruta.size(); i++) {
-           
-            lblPersona1.setBounds(ruta.get(i).getPosX(), ruta.get(i).getPosY(), 40, 40);
-            
-                Thread.sleep(2000);
-            }} catch (InterruptedException ex) {
-                Logger.getLogger(VistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (Exception ex) {
-            Logger.getLogger(VistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+
+        switch (this.cantidadPersonas) {
+            case 1:
+                //añade el label al panel y crea el objeto persona con su hilo
+                panel1.add(lblPersona1);
+                panel1.add(lblp1);
+                persona1 = c.crearPersona(1, "1", lblPersona1);
+                hiloPersona1 = new Thread(persona1);
+                hiloPersona1.start();
+                break;
+            case 2:
+                //añade el label al panel y crea el objeto persona con su hilo
+                panel1.add(lblPersona1);
+                persona1 = c.crearPersona(1, "1", lblPersona1);
+                hiloPersona1 = new Thread(persona1);
+                hiloPersona1.start();
+                //añade el label al panel y crea el objeto persona con su hilo
+                panel1.add(lblPersona2);
+                panel1.add(lblp1);
+                persona2 = c.crearPersona(2, "2", lblPersona2);
+                
+                hiloPersona2 = new Thread(persona2);
+                hiloPersona2.start();
+                break;
+            case 3:
+                //añade el label al panel y crea el objeto persona con su hilo
+                panel1.add(lblPersona1);
+                
+                persona1 = c.crearPersona(1, "1", lblPersona1);
+                hiloPersona1 = new Thread(persona1);
+                hiloPersona1.start();
+                //añade el label al panel y crea el objeto persona con su hilo
+                panel1.add(lblPersona2);
+                persona2 = c.crearPersona(2, "2", lblPersona2);
+                hiloPersona2 = new Thread(persona2);
+                hiloPersona2.start();
+                //añade el label al panel y crea el objeto persona con su hilo
+                panel1.add(lblPersona3);
+                panel1.add(lblp1);
+                persona3 = c.crearPersona(3, "4", lblPersona3);
+                hiloPersona3 = new Thread(persona3);
+                hiloPersona3.start();
+                break;
+            default:
+                System.out.println("");
+                break;
         }
-        mihilo.stop();
-        }
-        
     }
-
-
+}
