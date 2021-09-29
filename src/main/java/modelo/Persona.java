@@ -73,7 +73,7 @@ public class Persona implements Runnable {
             }
             this.setPosActual(numero);
             int pos = Integer.parseInt(this.getPosActual());
-            if(piso.getLuces().get(pos-1).getEstado()==false){
+            if(piso.getLuces().get(pos-1).getEstado()==false){ //encender la luz si esta apagada
                 piso.getLuces().get(pos-1).cambiarEstado();
             }
             try {

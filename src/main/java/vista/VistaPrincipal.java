@@ -45,7 +45,7 @@ public class VistaPrincipal extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
        
         crearComponentes();
-         crearPiso();
+        crearPiso();
         crearPersonas();
         this.setVisible(true);
     }
@@ -56,13 +56,7 @@ public class VistaPrincipal extends JFrame implements ActionListener {
         
     }
     
-    public void setPersonas(ArrayList personas) {
-        personas = this.personas;
-    }
-
-    public void setPisos(ArrayList pisos) {
-        pisos = this.pisos;
-    }
+    
 
     public void crearComponentes() throws Exception {
         //escoger un jpanel
@@ -147,7 +141,6 @@ public class VistaPrincipal extends JFrame implements ActionListener {
 
         this.add(panel1);
         panel1.setVisible(true);
-        ControladorPersona c = new ControladorPersona();
 
     }
 

@@ -73,9 +73,7 @@ public class PlanoPiso {
         System.out.println(route.stream().map(NodoHabitacion::getName).collect(Collectors.toList()));
     }
     public List<NodoHabitacion> encontrarRuta2(String origen, String destino) {
-        
         List<NodoHabitacion> route = buscadorRuta.buscarRuta(plano.getNodoHabitacion(origen), plano.getNodoHabitacion(destino));
-       // System.out.println(route.stream().map(NodoHabitacion::getName).collect(Collectors.toList()));
        return route;
     }
     

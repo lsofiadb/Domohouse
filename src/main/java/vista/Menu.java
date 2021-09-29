@@ -39,6 +39,7 @@ public class Menu extends JFrame implements ActionListener {
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.getContentPane().setBackground(new Color(183, 193, 190));
         crearComponentes();
+        this.setVisible(true);
     }
 
     public void crearComponentes() {
