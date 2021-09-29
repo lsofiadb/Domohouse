@@ -57,25 +57,14 @@ public class Menu extends JFrame implements ActionListener {
 
         //label Personas
         lblPersonas = new JLabel("Ingrese el número de personas: ");
-        lblPersonas.setBounds(39, 260, 300, 30);
+        lblPersonas.setBounds(39, 300, 300, 30);
         lblPersonas.setFont(new Font("Times New Roman", 1, 20));
         add(lblPersonas);
 
         //input Personas
         jtfPersonas = new JTextField();
-        jtfPersonas.setBounds(39, 290, 253, 30);
+        jtfPersonas.setBounds(39, 330, 253, 30);
         add(jtfPersonas);
-
-        //label Pisos
-        lblPisos = new JLabel("Ingrese el número de pisos: ");
-        lblPisos.setBounds(39, 320, 300, 30);
-        lblPisos.setFont(new Font("Times New Roman", 1, 20));
-        add(lblPisos);
-
-        //input Pisos
-        jtfPisos = new JTextField();
-        jtfPisos.setBounds(39, 350, 253, 30);
-        add(jtfPisos);
 
         //boton
         btnCrear = new JButton("Crear");
@@ -101,11 +90,9 @@ public class Menu extends JFrame implements ActionListener {
             int cantidad = Integer.parseInt(jtfPersonas.getText());
             if (cantidad > 0 && cantidad < 4) {
                 this.setVisible(false);
-                //pendiente 
-//            c.crearVistaPrincipal(personas, pisos);
                 c = new ControladorVista();
                 try {
-                    c.temporal(cantidad);
+                    c.crearVistaPrincipal(cantidad);
                 } catch (Exception ex) {
                     Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
                 }

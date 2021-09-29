@@ -1,15 +1,19 @@
 package modelo;
 
 import java.util.ArrayList;
+import javax.swing.JButton;
 
 public class Piso {
     private ArrayList <Luz> luces;
-    private ArrayList <Puerta> puertas;
-    
     //constructor
-    public Piso(ArrayList<Luz> luces, ArrayList<Puerta> puertas) {
-        this.luces = luces;
-        this.puertas = puertas;
+    
+    
+    public void crearPiso1(JButton btn1, JButton btn2, JButton btn3, JButton btn4){
+        luces = new ArrayList();
+        luces.add(new Luz(btn1));
+        luces.add(new Luz(btn2));
+        luces.add(new Luz(btn3));
+        luces.add(new Luz(btn4));
     }
     
     //getters y setters
@@ -19,14 +23,6 @@ public class Piso {
 
     public void setLuces(ArrayList<Luz> luces) {
         this.luces = luces;
-    }
-
-    public ArrayList<Puerta> getPuertas() {
-        return puertas;
-    }
-
-    public void setPuertas(ArrayList<Puerta> puertas) {
-        this.puertas = puertas;
     }
     
 }

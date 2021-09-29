@@ -14,14 +14,16 @@ public class Persona implements Runnable {
     private String posActual;
     private PlanoPiso planoPiso;
     private JLabel imagenPersona;
+    private Piso piso;
     //constructor
 
-    public Persona(int id, String posActual, JLabel imagenPersona) throws Exception {
+    public Persona(int id, String posActual, JLabel imagenPersona, Piso piso) throws Exception {
         this.id = id;
         this.posActual = posActual;
         this.imagenPersona = imagenPersona;
         this.planoPiso = new PlanoPiso();
         this.planoPiso.creacionPiso1();
+        this.piso = piso;
     }
 
     public int getId() {
@@ -58,7 +60,7 @@ public class Persona implements Runnable {
             } catch (Exception ex) {
                 Logger.getLogger(VistaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
-            this.setPosActual(numero);
+            
 
             for (int i = 0; i < ruta.size(); i++) {
                 try {
@@ -68,6 +70,11 @@ public class Persona implements Runnable {
                 }
                 this.imagenPersona.setBounds(ruta.get(i).getPosX(), ruta.get(i).getPosY(), 40, 40);
 
+            }
+            this.setPosActual(numero);
+            int pos = Integer.parseInt(this.getPosActual());
+            if(piso.getLuces().get(pos-1).getEstado()==false){
+                piso.getLuces().get(pos-1).cambiarEstado();
             }
             try {
                 //  mihilo.stop();

@@ -17,8 +17,4 @@ public class Puerta {
     public void setEstado(Boolean estado) {
         this.estado = estado;
     }
-
-    
-   
-    
 }

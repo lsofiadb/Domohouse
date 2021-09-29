@@ -1,6 +1,7 @@
 package vista;
 
 import controlador.ControladorPersona;
+import controlador.ControladorPiso;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,18 +20,21 @@ import javax.swing.JTextArea;
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 import modelo.NodoHabitacion;
 import modelo.Persona;
+import modelo.Piso;
 
 public class VistaPrincipal extends JFrame implements ActionListener {
 
     //atributos
     private ArrayList personas, pisos;
     JPanel panel1, panel2, panel3;
-    JButton btn1, btn2, btn3, btnBajar;
+    JButton btn1, btn2, btn3, btnBajar, btnLuzBedroom, btnLuzBathroom, btnLuzLiving, btnLuzKitchen;
     JLabel lblp1, lblp2, lblp3, lblPersona1, lblPersona2, lblPersona3;
     ImageIcon imgp1, imgp2, imgp3, imgper1, imgper2, imgper3;
     Thread hiloPersona1, hiloPersona2, hiloPersona3;
     Persona persona1, persona2, persona3;
     int cantidadPersonas = 0;
+    Piso nuevoPiso1;
+    ControladorPiso controladorPiso;
 
     public VistaPrincipal(int cantidad) throws Exception {
         this.cantidadPersonas = cantidad;
@@ -39,11 +43,19 @@ public class VistaPrincipal extends JFrame implements ActionListener {
         this.setLocationRelativeTo(null);
         this.setLayout(null);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+       
         crearComponentes();
+         crearPiso();
         crearPersonas();
         this.setVisible(true);
     }
-
+    
+    public void crearPiso(){
+        controladorPiso = new ControladorPiso();
+        nuevoPiso1 = controladorPiso.crearPiso1(btnLuzBathroom, btnLuzBedroom, btnLuzLiving, btnLuzKitchen );
+        
+    }
+    
     public void setPersonas(ArrayList personas) {
         personas = this.personas;
     }
@@ -71,26 +83,51 @@ public class VistaPrincipal extends JFrame implements ActionListener {
         imgper1 = new ImageIcon("src/main/java/imagenes/persona1.png");
         lblPersona1 = new JLabel(imgper1);
         lblPersona1.setBounds(700, 100, 40, 40);
-      //  panel1.add(lblPersona1);
+    
 
         //labels persona 2 bedroom
         imgper2 = new ImageIcon("src/main/java/imagenes/persona2.png");
         lblPersona2 = new JLabel(imgper2);
         lblPersona2.setBounds(740, 450, 40, 40);
-      //  panel1.add(lblPersona2);
+
 
         //labels persona 3 kitchen 
         imgper3 = new ImageIcon("src/main/java/imagenes/persona3.png");
         lblPersona3 = new JLabel(imgper3);
         lblPersona3.setBounds(450, 110, 40, 40);
-       // panel1.add(lblPersona3);
+       
 
         //Image con el piso
         imgp1 = new ImageIcon("src/main/java/imagenes/PISO1.PNG");
         lblp1 = new JLabel(imgp1);
         lblp1.setBounds(170, 10, 730, 561);
-      //  panel1.add(lblp1);
-
+     
+      
+       
+        //boton 1
+        btnLuzBathroom = new JButton();
+        btnLuzBathroom.setBounds(640, 140, 24, 24);
+        btnLuzBathroom.addActionListener(this);
+        panel1.add(btnLuzBathroom);
+        
+        //boton 2
+        btnLuzBedroom = new JButton();
+        btnLuzBedroom.setBounds(815, 360, 24, 24);
+        btnLuzBedroom.addActionListener(this);
+        panel1.add(btnLuzBedroom);
+        
+        //boton 3
+        btnLuzLiving = new JButton();
+        btnLuzLiving.setBounds(477, 445, 24, 24);
+        btnLuzLiving.addActionListener(this);
+        panel1.add(btnLuzLiving);
+        
+        //boton 4
+        btnLuzKitchen = new JButton();
+        btnLuzKitchen.setBounds(400, 110, 24, 24);
+        btnLuzKitchen.addActionListener(this);
+        panel1.add(btnLuzKitchen);
+        
         //Boton subir a piso 2
         btn1 = new JButton("Subir al piso 2");
         btn1.setBounds(930, 300, 130, 30);
@@ -102,31 +139,16 @@ public class VistaPrincipal extends JFrame implements ActionListener {
 
         //JtextArea
         JTextArea txt1 = new JTextArea();
-        txt1.append("Piso actual: \n");
-        txt1.append("Cantidad de personas: \n");
-        txt1.append("Cantidad de pisos: \n");
+        txt1.append("Piso actual: 1 \n");
+        txt1.append("Cantidad de personas: "+cantidadPersonas+"\n");
+        txt1.append("Cantidad de pisos: 3\n");
         txt1.setBounds(170, 600, 200, 55);
         panel1.add(txt1);
 
         this.add(panel1);
         panel1.setVisible(true);
-        //actualizarPosicionPersona(lblPersona1);
         ControladorPersona c = new ControladorPersona();
 
-        //this.getContentPane().setComponentZOrder(lblPersona1, 0);
-    }
-
-    //cambio de posicion de la imagen 
-    public void actualizarPosicionPersona(JLabel label) throws Exception {
-        ControladorPersona c = new ControladorPersona();
-        List<NodoHabitacion> ruta = new ArrayList();
-        //   ruta = c.consultarRuta();
-
-        //posicion nuevas 
-        for (int i = 0; i < ruta.size(); i++) {
-            lblPersona1.setBounds(ruta.get(i).getPosX(), ruta.get(i).getPosY(), 40, 40);
-
-        }
     }
 
     public void crearPanel2() {
@@ -162,9 +184,9 @@ public class VistaPrincipal extends JFrame implements ActionListener {
 
         //JtextArea
         JTextArea txt1 = new JTextArea();
-        txt1.append("Piso actual: \n");
-        txt1.append("Cantidad de personas: \n");
-        txt1.append("Cantidad de pisos: \n");
+        txt1.append("Piso actual: 2\n");
+        txt1.append("Cantidad de personas: "+cantidadPersonas+"\n");
+        txt1.append("Cantidad de pisos: 3 \n");
         txt1.setBounds(170, 600, 200, 55);
         panel2.add(txt1);
 
@@ -198,9 +220,9 @@ public class VistaPrincipal extends JFrame implements ActionListener {
 
         //JtextArea
         JTextArea txt1 = new JTextArea();
-        txt1.append("Piso actual: \n");
-        txt1.append("Cantidad de personas: \n");
-        txt1.append("Cantidad de pisos: \n");
+        txt1.append("Piso actual: 3 \n");
+        txt1.append("Cantidad de personas: "+cantidadPersonas+"\n");
+        txt1.append("Cantidad de pisos:3 \n");
         txt1.setBounds(170, 520, 200, 55);
         panel3.add(txt1);
 
@@ -222,6 +244,40 @@ public class VistaPrincipal extends JFrame implements ActionListener {
         } else if (e.getSource() == btn3) {
             panel3.setVisible(false);
             panel2.setVisible(true);
+            //btn luz bedroom
+        } else if(e.getSource() == btnLuzBedroom){
+           if(persona1.getPosActual().equals("2") ||persona2.getPosActual().equals("2")|| persona3.getPosActual().equals("2")){
+               JOptionPane.showMessageDialog(null, "No puede modificar la luz, hay una persona en la habitación");
+           }else{
+               nuevoPiso1.getLuces().get(1).cambiarEstado();
+           }
+           
+            // btn bathroom 
+        } else if(e.getSource() == btnLuzBathroom){
+            if(persona1.getPosActual().equals("1") ||persona2.getPosActual().equals("1") || persona3.getPosActual().equals("1")){
+               JOptionPane.showMessageDialog(null, "No puede modificar la luz, hay una persona en la habitación");
+           }else{
+               nuevoPiso1.getLuces().get(0).cambiarEstado();
+           }
+            
+            //btn living room 
+        } else if(e.getSource() == btnLuzLiving){
+            if(persona1.getPosActual().equals("3")||persona2.getPosActual().equals("3") || persona3.getPosActual().equals("3")){
+               JOptionPane.showMessageDialog(null, "No puede modificar la luz, hay una persona en la habitación");
+           }else{
+              nuevoPiso1.getLuces().get(2).cambiarEstado();
+           }
+            
+            
+            //btn kitchen 
+        } else if(e.getSource() == btnLuzKitchen){
+             if(persona1.getPosActual().equals("4")||persona2.getPosActual().equals("4")|| persona3.getPosActual().equals("4")){
+               JOptionPane.showMessageDialog(null, "No puede modificar la luz, hay una persona en la habitación");
+           }else{
+              nuevoPiso1.getLuces().get(3).cambiarEstado();
+           }
+           
+            
         }
     }
 
@@ -234,20 +290,20 @@ public class VistaPrincipal extends JFrame implements ActionListener {
                 //añade el label al panel y crea el objeto persona con su hilo
                 panel1.add(lblPersona1);
                 panel1.add(lblp1);
-                persona1 = c.crearPersona(1, "1", lblPersona1);
+                persona1 = c.crearPersona(1, "1", lblPersona1, nuevoPiso1);
                 hiloPersona1 = new Thread(persona1);
                 hiloPersona1.start();
                 break;
             case 2:
                 //añade el label al panel y crea el objeto persona con su hilo
                 panel1.add(lblPersona1);
-                persona1 = c.crearPersona(1, "1", lblPersona1);
+                persona1 = c.crearPersona(1, "1", lblPersona1,nuevoPiso1);
                 hiloPersona1 = new Thread(persona1);
                 hiloPersona1.start();
                 //añade el label al panel y crea el objeto persona con su hilo
                 panel1.add(lblPersona2);
                 panel1.add(lblp1);
-                persona2 = c.crearPersona(2, "2", lblPersona2);
+                persona2 = c.crearPersona(2, "2", lblPersona2, nuevoPiso1);
                 
                 hiloPersona2 = new Thread(persona2);
                 hiloPersona2.start();
@@ -256,18 +312,18 @@ public class VistaPrincipal extends JFrame implements ActionListener {
                 //añade el label al panel y crea el objeto persona con su hilo
                 panel1.add(lblPersona1);
                 
-                persona1 = c.crearPersona(1, "1", lblPersona1);
+                persona1 = c.crearPersona(1, "1", lblPersona1,nuevoPiso1);
                 hiloPersona1 = new Thread(persona1);
                 hiloPersona1.start();
                 //añade el label al panel y crea el objeto persona con su hilo
                 panel1.add(lblPersona2);
-                persona2 = c.crearPersona(2, "2", lblPersona2);
+                persona2 = c.crearPersona(2, "2", lblPersona2, nuevoPiso1);
                 hiloPersona2 = new Thread(persona2);
                 hiloPersona2.start();
                 //añade el label al panel y crea el objeto persona con su hilo
                 panel1.add(lblPersona3);
                 panel1.add(lblp1);
-                persona3 = c.crearPersona(3, "4", lblPersona3);
+                persona3 = c.crearPersona(3, "4", lblPersona3, nuevoPiso1);
                 hiloPersona3 = new Thread(persona3);
                 hiloPersona3.start();
                 break;
